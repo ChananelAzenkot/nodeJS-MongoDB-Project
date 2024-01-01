@@ -1,1 +1,0 @@
-const good = require('./good');
