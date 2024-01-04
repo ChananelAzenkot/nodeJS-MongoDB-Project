@@ -10,7 +10,7 @@ module.exports = app => {
 
     const Client = mongoose.model("clients", schema);
 
-    app.get('/clients', async (req, res) => {
-        res.send(await Client.find());
+    app.get("/clients/all-group", async (req, res) => {
+      res.send(await Client.find());
     });
 }

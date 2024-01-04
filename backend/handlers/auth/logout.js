@@ -1,5 +1,5 @@
 module.exports = app => {
-    app.get("/logout", (req, res) => {
+    app.get("/users/logout", (req, res) => {
         res.clearCookie("jwt");
         res.send("Logged out");
     });
