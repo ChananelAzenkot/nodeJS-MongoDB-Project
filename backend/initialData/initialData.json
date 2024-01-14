@@ -1,0 +1,118 @@
+{
+  "users": [
+    {
+      "name": { "first": "John", "last": "Doe" },
+      "isBusiness": false,
+      "phone": "055-1234567",
+      "email": "john.doe@example.com",
+      "password": "Passw0rd!",
+      "address": {
+        "country": "United States",
+        "city": "New York",
+        "street": "Broadway",
+        "houseNumber": "123"
+      },
+      "image": {
+        "url": "https://example.com/johndoe.jpg",
+        "alt": "John Doe Image"
+      }
+    },
+    {
+      "name": { "first": "Business", "last": "Owner" },
+      "isBusiness": true,
+      "phone": "055-7654321",
+      "email": "business.owner@example.com",
+      "password": "BusinessPass123!",
+      "address": {
+        "country": "United States",
+        "city": "San Francisco",
+        "street": "Market Street",
+        "houseNumber": "789"
+      },
+      "image": {
+        "url": "https://example.com/businessowner.jpg",
+        "alt": "Business Owner Image"
+      }
+    },
+    {
+      "name": { "first": "Admin", "last": "Master" },
+      "isBusiness": true,
+      "isAdmin": true,
+      "phone": "055-9876543",
+      "email": "admin.master@example.com",
+      "password": "AdminPass!5678",
+      "address": {
+        "country": "United States",
+        "city": "Los Angeles",
+        "street": "Main Street",
+        "houseNumber": "456"
+      },
+      "image": {
+        "url": "https://example.com/adminmaster.jpg",
+        "alt": "Admin Master Image"
+      }
+    }
+  ],
+  "cards": [
+    {
+      "title": "New Card",
+      "subtitle": "Exciting Information",
+      "description": "This card contains important details.",
+      "phone": "054-1112233",
+      "email": "new.card@example.com",
+      "web": "https://www.newcard.co",
+      "image": {
+        "url": "https://example.com/newcard.jpg",
+        "alt": "New Card Image"
+      },
+      "address": {
+        "state": "California",
+        "country": "United States",
+        "city": "San Diego",
+        "street": "Ocean Avenue",
+        "houseNumber": 10,
+        "zip": "12345"
+      }
+    },
+    {
+      "title": "Tech Hub",
+      "subtitle": "Innovative Solutions",
+      "description": "Explore the latest in technology.",
+      "phone": "054-4455667",
+      "email": "tech.hub@example.com",
+      "web": "https://www.techhub.co",
+      "image": {
+        "url": "https://example.com/techhub.jpg",
+        "alt": "Tech Hub Image"
+      },
+      "address": {
+        "state": "Texas",
+        "country": "United States",
+        "city": "Austin",
+        "street": "Tech Street",
+        "houseNumber": 20,
+        "zip": "56789"
+      }
+    },
+    {
+      "title": "Nature Retreat",
+      "subtitle": "Serene Escape",
+      "description": "Discover peace in nature's embrace.",
+      "phone": "054-7788990",
+      "email": "nature.retreat@example.com",
+      "web": "https://www.natureretreat.co",
+      "image": {
+        "url": "https://example.com/natureretreat.jpg",
+        "alt": "Nature Retreat Image"
+      },
+      "address": {
+        "state": "Colorado",
+        "country": "United States",
+        "city": "Boulder",
+        "street": "Forest Lane",
+        "houseNumber": 30,
+        "zip": "98765"
+      }
+    }
+  ]
+}
