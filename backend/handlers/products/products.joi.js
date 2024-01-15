@@ -1,7 +1,7 @@
-const Joi = require('joi');
+const Joi = require("joi");
 
 exports.ProductValid = Joi.object({
-    name: Joi.string().required(),
-    price: Joi.number().required(),
-    discount: Joi.number(),
+  name: Joi.string().required(),
+  price: Joi.number().required(),
+  discount: Joi.number(),
 });

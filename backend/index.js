@@ -1,10 +1,11 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 
 async function main() {
-  await mongoose.connect("mongodb://localhost:27017/BackHand-FullStack");
-  console.log("MongoDB connected");
+  await mongoose.connect(process.env.REMOTE_URL);
+  console.log("mongodb connection established on port 27017");
 }
 
 main().catch((err) => console.log(err));
@@ -31,3 +32,4 @@ require("./handlers/auth/logout")(app);
 require("./handlers/auth/signup")(app);
 require("./handlers/products/products")(app);
 require("./handlers/products/products-dashboard")(app);
+

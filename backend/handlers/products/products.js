@@ -1,18 +1,23 @@
 const guard = require("../../guard");
 const { Product } = require("./products.model");
 const { ProductValid } = require("./products.joi");
+const { getLoggedUserId } = require("../../config");
 
 module.exports = (app) => {
-  app.get("/products", guard, async (req, res) => {
-    res.send(await Product.find());
-  });
+  const isProductOwner = async (productId, req, res) => {
+    const user_id = getLoggedUserId(req, res);
+    const product = await Product.findOne({ _id: productId, user_id });
 
-  app.get("/product_like", guard, async (req, res) => {
-    res.send(await Product.find({ unLike: true }));
+    return Boolean(product);
+  };
+  app.get("/products", guard, async (req, res) => {
+    const products = await Product.find({ user_id: getLoggedUserId(req, res) });
+    res.send(products);
   });
 
   app.get("/products/:id", guard, async (req, res) => {
-    const product = await Product.findOne({ _id: req.params.id });
+    const user_id = getLoggedUserId(req, res);
+    const product = await Product.findOne({ _id: req.params.id, user_id });
 
     if (!product) {
       return res.status(403).send("Product not found");
@@ -31,7 +36,8 @@ module.exports = (app) => {
       return res.status(403).send(errors);
     }
 
-    const product = new Product({ name, price, discount });
+    const user_id = getLoggedUserId(req, res);
+    const product = new Product({ name, price, discount, user_id });
     const obj = await product.save();
 
     res.send(obj);
@@ -42,6 +48,10 @@ module.exports = (app) => {
 
     if (!name || !price || !discount) {
       return res.status(403).send("required parameters missing");
+    }
+
+    if (!(await isProductOwner(req.params.id, req, res))) {
+      return res.status(401).send("User not authorized");
     }
 
     const obj = await Product.findByIdAndUpdate(req.params.id, {
@@ -57,23 +67,11 @@ module.exports = (app) => {
     res.send();
   });
 
-  app.patch("/product_like/:id", guard, async (req, res) => {
-    const userId = getLoggedUserId(req, res);
-
-    if (userId !== req.params.id) {
-      return res.status(401).send("User not authorized to do likes");
+  app.delete("/products/:id", guard, async (req, res) => {
+    if (!(await isProductOwner(req.params.id, req, res))) {
+      return res.status(401).send("User not authorized");
     }
 
-    const user = await User.findById(req.params.id);
-
-    user.unLike = !user.unLike;
-
-    await user.save();
-
-    res.end();
-  });
-
-  app.delete("/products/:id", guard, async (req, res) => {
     try {
       await Product.findByIdAndDelete(req.params.id);
     } catch (err) {
