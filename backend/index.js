@@ -3,12 +3,18 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 
-async function main() {
-  await mongoose.connect(process.env.REMOTE_URL);
-  console.log("mongodb connection established on port 27017");
-}
+import("chalk").then((chalkModule) => {
+  const chalk = chalkModule.default;
 
-main().catch((err) => console.log(err));
+  async function main() {
+    await mongoose.connect(process.env.REMOTE_URL);
+    console.log(
+      chalk.blue("mongodb connection established on port 27017")
+    );
+  }
+
+  main().catch((err) => console.log(err));
+});
 
 const app = express();
 
