@@ -1,8 +1,8 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { User } = require("./user.model");
-const { getLoggedUserId } = require("../../config");
-const guard = require("../../guard");
+const { getLoggedUserId } = require("../../config/config");
+const guard = require("../../guards/guard");
 
 module.exports = (app) => {
   app.post("/users/login", async (req, res) => {

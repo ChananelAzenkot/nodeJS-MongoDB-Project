@@ -2,9 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-
-import("chalk").then((chalkModule) => {
-  const chalk = chalkModule.default;
+const chalk = require("chalk");
 
   async function main() {
     await mongoose.connect(process.env.REMOTE_URL);
@@ -14,9 +12,10 @@ import("chalk").then((chalkModule) => {
   }
 
   main().catch((err) => console.log(err));
-});
+
 
 const app = express();
+
 
 app.use(express.json());
 

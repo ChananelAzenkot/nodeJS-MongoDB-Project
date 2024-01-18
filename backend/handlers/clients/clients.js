@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const guard = require("../../guard");
+const guard = require("../../guards/guard");
 
 module.exports = (app) => {
   const schema = new mongoose.Schema({
@@ -7,6 +7,13 @@ module.exports = (app) => {
     lastName: String,
     phone: String,
     email: String,
+    password: String,
+    address: String,
+    street: String,
+    city: String,
+    state: String,
+    zip: String,
+    houseNumber: Number,
   });
 
   const Client = mongoose.model("clients", schema);

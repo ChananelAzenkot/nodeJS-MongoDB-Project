@@ -1,7 +1,7 @@
-const guard = require("../../guard");
+const guard = require("../../guards/guard");
 const { Product } = require("./products.model");
 const { ProductValid } = require("./products.joi");
-const { getLoggedUserId } = require("../../config");
+const { getLoggedUserId } = require("../../config/config");
 
 module.exports = (app) => {
   const isProductOwner = async (productId, req, res) => {
