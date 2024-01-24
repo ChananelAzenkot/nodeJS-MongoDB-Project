@@ -1,14 +1,15 @@
 const Joi = require("joi");
 
-exports.middlewareUsers = Joi.object({
-    name: Joi.object({
-        first: Joi.string().required(),
-        middle: Joi.string().required(),
-        last: Joi.string().required(),
-    }),
-    email: Joi.string().email().required(),
+exports.middlewareCards = Joi.object({
+    title: Joi.string().required(),
+    subtitle: Joi.string().required(),
+    description: Joi.string().required(),
     phone: Joi.string().required(),
-    password: Joi.string().required(),
+    web: Joi.string().required(),
+    image: Joi.object({
+        url: Joi.string().required(),
+        alt: Joi.string().required(),
+    }),
     address: Joi.object({
         state: Joi
             .string()
@@ -27,8 +28,7 @@ exports.middlewareUsers = Joi.object({
             .required(),
         zip: Joi,
     }),
-    image: Joi.object({
-        url: Joi.string().required(),
-        alt: Joi.string().required(),
-    }),
+    bizNumber: Joi.number().required(),
+    likes: Joi.array().items(Joi.string()),
+    user_id: Joi.string(),
 });

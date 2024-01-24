@@ -14,12 +14,12 @@ const schema = new Schema({
   phone: String,
   password: String,
   address: {
-    street: { type: String },
-    city: { type: String },
     state: { type: String },
-    zip: { type: String },
-    houseNumber: { type: Number },
     country: { type: String },
+    city: { type: String },
+    street: { type: String },
+    houseNumber: { type: Number },
+    zip: { type: Number },
     _id: { type: ObjectId, default: () => new mongoose.Types.ObjectId() },
   },
   image: {
@@ -35,5 +35,6 @@ const schema = new Schema({
     type: Boolean,
     default: false,
   },
+  createTime: { type: Date, default: Date.now() },
 });
 exports.User = mongoose.model("users", schema);
