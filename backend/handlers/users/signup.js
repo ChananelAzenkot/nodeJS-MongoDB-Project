@@ -1,21 +1,19 @@
-const bcrypt = require('bcrypt');
-const { User } = require('./models/user.model');
+const bcrypt = require("bcrypt");
+const { User } = require("./models/user.model");
 
-module.exports = app => {
-    app.post("/signup", async (req, res) => {
-        const { email, fullName, password } = req.body;
+module.exports = (app) => {
+  app.post("/signup", async (req, res) => {
+    try {
+      const userInfo = req.body;
+      await bcrypt.hash(userInfo.password, 10);
+      const user = new User(userInfo);
 
-        if (!email || !fullName || !password) {
-            return res.status(403).send("Inputs cant be empty");
+      await user.save();
+      res.status(201).send("User created successfully");
+    } catch (error) {
+        if(error.code === 11000){
+            res.status(409).send("email already exists");
         }
-
-        const user = new User({
-            email,
-            fullName,
-            password: await bcrypt.hash(password, 10),
-        });
-
-        const newUser = await user.save();
-        res.send(newUser);
-    });
-}
+    }
+  });
+};
