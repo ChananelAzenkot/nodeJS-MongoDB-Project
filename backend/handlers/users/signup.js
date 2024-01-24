@@ -5,7 +5,8 @@ module.exports = (app) => {
   app.post("/signup", async (req, res) => {
     try {
       const userInfo = req.body;
-      await bcrypt.hash(userInfo.password, 10);
+      const passUser = await bcrypt.hash(userInfo.password, 10);
+      userInfo.password = passUser;
       const user = new User(userInfo);
 
       await user.save();

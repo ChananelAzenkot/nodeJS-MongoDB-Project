@@ -15,13 +15,14 @@ module.exports = app => {
         const user = await User.findOne({ email });
 
         if (!user) {
-            return res.status(403).send("email or password is incorrect");
+            return res.status(403).send("email or password is incorrect 1");
         }
 
         const passwordMatch = await bcrypt.compare(password, user.password);
 
         if (!passwordMatch) {
-            return res.status(403).send("email or password is incorrect");
+            console.log(password);
+            return res.status(403).send("email or password is incorrect 2");
         }
 
         const token = jwt.sign(
