@@ -24,37 +24,46 @@ module.exports = (app) => {
   });
 
 
-  app.put("/api/user/:id", adminGuard,guard, async (req, res) => {
-    const { getLoggedUserId } = jwt(
-      req.headers.authorization,
-      process.env.JWT_SECRET
-    );
-    const { userId } = getLoggedUserId(req, res);
-    req.body.userId = userId;
-    if (!req.body.userId) return res.status(403).send("User not authorized");
-  });
+app.put("/api/user/:id", adminGuard, guard, async (req, res) => {
+  const user = getLoggedUserId(req, res);
+  if (!user) return res.status(403).send("User not authorized");
 
-  app.patch("/api/user/:id", businessGuard, async (req, res) => {
-    const { userId } = getLoggedUserId(req, res);
+  const { userId } = user;
+  req.body.userId = userId;
 
-    if (userId !== req.params.id) {
-      return res.status(401).send("User not authorized");
-    }
 
-    const user = await User.findById(req.params.id);
-    user.isBusiness = !user.isBusiness;
-    await user.save();
+  const userToUpdate = await User.findById(req.params.id);
+  if (!userToUpdate) {
+    return res.status(404).send("User not found");
+  }
 
-    res.end();
-  });
+  Object.assign(userToUpdate, req.body);
 
-  app.delete("/api/user/:id", adminGuard, async (req, res) => {
+  await userToUpdate.save();
+
+  res.send("User updated successfully");
+});
+
+
+app.patch("/api/user/:id", guard, async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (!user) {
+    return res.status(404).send("User not found");
+  }
+
+  user.IsBusiness = !user.IsBusiness;
+  await user.save();
+
+  res.send("User updated "+ user.IsBusiness);
+});
+
+  app.delete("/api/user/:id",guard,adminGuard, async (req, res) => {
     const user = await User.findByIdAndDelete(req.params.id);
 
     if (!user) {
       return res.status(404).send("User not found");
     }
 
-    res.send(user);
+    res.send ("User deleted successfully " + user.name.first);
   });
 };
