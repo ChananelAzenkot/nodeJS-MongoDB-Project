@@ -1,5 +1,5 @@
 const { guard } = require("../../guards");
-const {businessGuard} = require("../../guards");
+const { businessGuard } = require("../../guards");
 const { Card } = require("../cards/cards.model");
 const jwt = require("../../config/config");
 
@@ -25,29 +25,37 @@ module.exports = (app) => {
   });
 
   app.post("/api/cards", businessGuard, async (req, res) => {
-    const { getTokenParams } = jwt(req.headers.authorization,process.env.JWT_SECRET);
-    const { userId } = getTokenParams(req, res);
+    const { getLoggedUserId } = jwt(
+      req.headers.authorization,
+      process.env.JWT_SECRET
+    );
+    const { userId } = getLoggedUserId(req, res);
     req.body.userId = userId;
     if (!req.body.userId) {
       return res.status(403).send("User not authorized");
-    }else{
+    } else {
       const card = new Card(req.body);
       const newCard = await card.save();
       res.send(newCard);
     }
   });
 
-  app.put('/api/cards/:id', businessGuard, async (req, res) => {
-    const { getTokenParams } = jwt(req.headers.authorization,process.env.JWT_SECRET);
-    const { userId } = getTokenParams(req, res);
+  app.put("/api/cards/:id", businessGuard, async (req, res) => {
+    const { getLoggedUserId } = jwt(
+      req.headers.authorization,
+      process.env.JWT_SECRET
+    );
+    const { userId } = getLoggedUserId(req, res);
     req.body.userId = userId;
     if (!req.body.userId) {
       return res.status(403).send("User not authorized");
-    }else{
-      const card = await Card.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    } else {
+      const card = await Card.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+      });
 
       if (!card) {
-        return res.status(404).send('Card not found');
+        return res.status(404).send("Card not found");
       }
 
       res.send(card);
@@ -55,11 +63,11 @@ module.exports = (app) => {
   });
 
   app.delete("/api/cards/:id", businessGuard, async (req, res) => {
-    const { getTokenParams } = jwt(
+    const { getLoggedUserId } = jwt(
       req.headers.authorization,
       process.env.JWT_SECRET
     );
-    const { userId } = getTokenParams(req, res);
+    const { userId } = getLoggedUserId(req, res);
     req.body.userId = userId;
     if (!req.body.userId) {
       return res.status(403).send("User not authorized");

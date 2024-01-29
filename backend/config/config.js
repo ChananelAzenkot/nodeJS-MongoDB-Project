@@ -11,5 +11,7 @@ exports.getLoggedUserId = (req, res) => {
     return res.status(401).send("User not authorized");
   }
 
-  return data.userId;
+  return data;
 };
+
+
