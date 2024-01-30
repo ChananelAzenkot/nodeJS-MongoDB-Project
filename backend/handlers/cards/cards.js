@@ -9,24 +9,24 @@ module.exports = (app) => {
     res.send(cards);
   });
 
-app.get("/api/my-cards",guard, async (req, res) => {
-  try {
-    const { userId } = getLoggedUserId(req, res);
+  app.get("/api/my-cards", guard, async (req, res) => {
+    try {
+      const { userId } = getLoggedUserId(req, res);
 
-    if (!userId) {
-      return res.status(403).send("User not authorized");
-    }
-    const cards = await Card.find({ userId: userId });
+      if (!userId) {
+        return res.status(403).send("User not authorized");
+      }
+      const cards = await Card.find({ user_id: userId });
 
-    if(!cards || cards.length === 0) {
-      return res.status(404).send("No cards found for this user");
+      if (!cards || cards.length === 0) {
+        return res.status(404).send("No cards found for this user");
+      }
+      res.send(cards);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(" Server Error");
     }
-    res.send(cards);
-  }catch(error){
-    console.log(error);
-    res.status(500).send(" Server Error");
-  }
-});
+  });
 
   app.get("/api/card/:id", async (req, res) => {
     const card = await Card.findById(req.params.id);
@@ -37,19 +37,20 @@ app.get("/api/my-cards",guard, async (req, res) => {
 
     res.send(card);
   });
+app.post("/api/addCard", businessGuard, async (req, res) => {
+  const { userId } = getLoggedUserId(req, res);
 
-  app.post("/api/addCard", businessGuard, async (req, res) => {
-    const { userId } = getLoggedUserId(req, res);
-    req.body.userId = userId;
-    if (!req.body.userId) {
-      return res.status(403).send("User not authorized");
-    } else {
-      const card = new Card(req.body);
-      const newCard = await card.save();
-      res.send(newCard);
-    }
-  });
-  
+  if (!userId) {
+    return res.status(403).send("User not authorized");
+  }
+
+  req.body.user_id = userId;
+
+  const card = new Card(req.body);
+  const newCard = await card.save();
+  res.send(newCard);
+});
+
   app.put("/api/card/:id", businessGuard, async (req, res) => {
     const { userId } = getLoggedUserId(req, res);
     req.body.userId = userId;
@@ -68,38 +69,38 @@ app.get("/api/my-cards",guard, async (req, res) => {
     }
   });
 
-app.patch("/api/cardLike/:id", businessGuard, async (req, res) => {
-  const { userId } = getLoggedUserId(req, res);
-  if (!userId) {
-    return res.status(403).send("User not authorized");
-  } else {
-    const card = await Card.findById(req.params.id);
-    if (!card) {
-      return res.status(404).send("Card not found");
+  app.patch("/api/cardLike/:id", businessGuard, async (req, res) => {
+    const { userId } = getLoggedUserId(req, res);
+    if (!userId) {
+      return res.status(403).send("User not authorized");
+    } else {
+      const card = await Card.findById(req.params.id);
+      if (!card) {
+        return res.status(404).send("Card not found");
+      }
+
+      if (!card.likes.includes(userId)) {
+        card.likes.push(userId);
+        await card.save();
+      }
+
+      res.send("Card updated " + card.likes);
     }
+  });
 
-    if (!card.likes.includes(userId)) {
-      card.likes.push(userId);
-      await card.save();
+  app.delete("/api/card/:id", businessGuard, async (req, res) => {
+    const { userId } = getLoggedUserId(req, res);
+    req.body.userId = userId;
+    if (!req.body.userId) {
+      return res.status(403).send("User not authorized");
+    } else {
+      const card = await Card.findByIdAndDelete(req.params.id);
+
+      if (!card) {
+        return res.status(404).send("Card not found");
+      }
+
+      res.send(card + "Card deleted successfully");
     }
-
-    res.send("Card updated " + card.likes);
-  }
-});
-
-app.delete("/api/card/:id", businessGuard, async (req, res) => {
-  const { userId } = getLoggedUserId(req, res);
-  req.body.userId = userId;
-  if (!req.body.userId) {
-    return res.status(403).send("User not authorized");
-  } else {
-    const card = await Card.findByIdAndDelete(req.params.id);
-
-    if (!card) {
-      return res.status(404).send("Card not found");
-    }
-
-    res.send(card + "Card deleted successfully");
-  }
-});
+  });
 };
