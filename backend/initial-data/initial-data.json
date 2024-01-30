@@ -5,7 +5,7 @@
                 "first": "regular",
                 "last": "user"
             },
-            "isBusiness": false,
+            "IsBusiness": false,
             "phone": "050-0000000",
             "email": "regular@gmail.com",
             "password": "Aa123456!",
@@ -25,7 +25,7 @@
                 "first": "business",
                 "last": "user"
             },
-            "isBusiness": true,
+            "IsBusiness": true,
             "phone": "050-0000000",
             "email": "business@gmail.com",
             "password": "Aa123456!",
@@ -45,7 +45,7 @@
                 "first": "admin",
                 "last": "user"
             },
-            "isBusiness": true,
+            "IsBusiness": true,
             "isAdmin": true,
             "phone": "050-0000000",
             "email": "admin@gmail.com",

@@ -6,12 +6,12 @@ const jwt = require("../../../config/config");
 const { getLoggedUserId } = require("../../../config/config");
 
 module.exports = (app) => {
-  app.get("/api/users",adminGuard, async (req, res) => {
+  app.get("/api/users", adminGuard, async (req, res) => {
     const users = await User.find();
     res.send(users);
   });
 
-  app.get("/api/user/:id",adminGuard,guard, async (req, res) => {
+  app.get("/api/user/:id", adminGuard, guard, async (req, res) => {
     const user = await User.findById(req.params.id);
 
     const { userId } = getLoggedUserId(req, res);
@@ -23,47 +23,44 @@ module.exports = (app) => {
     res.send(user);
   });
 
+  app.put("/api/user/:id", adminGuard, guard, async (req, res) => {
+    const user = getLoggedUserId(req, res);
+    if (!user) return res.status(403).send("User not authorized");
 
-app.put("/api/user/:id", adminGuard, guard, async (req, res) => {
-  const user = getLoggedUserId(req, res);
-  if (!user) return res.status(403).send("User not authorized");
+    const { userId } = user;
+    req.body.userId = userId;
 
-  const { userId } = user;
-  req.body.userId = userId;
+    const userToUpdate = await User.findById(req.params.id);
+    if (!userToUpdate) {
+      return res.status(404).send("User not found");
+    }
 
+    Object.assign(userToUpdate, req.body);
 
-  const userToUpdate = await User.findById(req.params.id);
-  if (!userToUpdate) {
-    return res.status(404).send("User not found");
-  }
+    await userToUpdate.save();
 
-  Object.assign(userToUpdate, req.body);
+    res.send("User updated successfully");
+  });
 
-  await userToUpdate.save();
+  app.patch("/api/user/:id", guard, businessGuard, async (req, res) => {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
 
-  res.send("User updated successfully");
-});
+    user.IsBusiness = !user.IsBusiness;
+    await user.save();
 
+    res.send("User updated " + user.IsBusiness);
+  });
 
-app.patch("/api/user/:id", guard, async (req, res) => {
-  const user = await User.findById(req.params.id);
-  if (!user) {
-    return res.status(404).send("User not found");
-  }
-
-  user.IsBusiness = !user.IsBusiness;
-  await user.save();
-
-  res.send("User updated "+ user.IsBusiness);
-});
-
-  app.delete("/api/user/:id",guard,adminGuard, async (req, res) => {
+  app.delete("/api/user/:id", guard, adminGuard, async (req, res) => {
     const user = await User.findByIdAndDelete(req.params.id);
 
     if (!user) {
       return res.status(404).send("User not found");
     }
 
-    res.send ("User deleted successfully " + user.name.first);
+    res.send("User deleted successfully " + user.name.first);
   });
 };

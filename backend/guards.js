@@ -13,9 +13,9 @@ exports.guard = (req, res, next) => {
 };
 
 exports.businessGuard = (req, res, next) => {
-  const { userId, isBusiness, isAdmin } = getLoggedUserId(req, res);
+  const { IsBusiness, isAdmin } = getLoggedUserId(req, res);
 
-  if (isBusiness || isAdmin) {
+  if (IsBusiness || isAdmin) {
     next();
   } else {
     res.status(401).send("User not authorized");

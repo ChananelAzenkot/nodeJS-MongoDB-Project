@@ -29,7 +29,7 @@ module.exports = (app) => {
       {
         userId: user._id,
         isAdmin: user.isAdmin,
-        isBusiness: user.isBusiness,
+        IsBusiness: user.IsBusiness,
       },
       process.env.JWT_SECRET,
       {
@@ -86,7 +86,7 @@ module.exports = (app) => {
     }
 
     const user = await User.findById(req.params.id);
-    user.isBusiness = !user.isBusiness;
+    user.IsBusiness = !user.IsBusiness;
     await user.save();
 
     res.end();

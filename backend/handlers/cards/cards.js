@@ -9,10 +9,24 @@ module.exports = (app) => {
     res.send(cards);
   });
 
-  app.get("/api/my-cards", guard, async (req, res) => {
-    const cards = await Card.find({ userId: req.userId });
+app.get("/api/my-cards",guard, async (req, res) => {
+  try {
+    const { userId } = getLoggedUserId(req, res);
+
+    if (!userId) {
+      return res.status(403).send("User not authorized");
+    }
+    const cards = await Card.find({ userId: userId });
+
+    if(!cards || cards.length === 0) {
+      return res.status(404).send("No cards found for this user");
+    }
     res.send(cards);
-  });
+  }catch(error){
+    console.log(error);
+    res.status(500).send(" Server Error");
+  }
+});
 
   app.get("/api/card/:id", async (req, res) => {
     const card = await Card.findById(req.params.id);
@@ -35,7 +49,7 @@ module.exports = (app) => {
       res.send(newCard);
     }
   });
-
+  
   app.put("/api/card/:id", businessGuard, async (req, res) => {
     const { userId } = getLoggedUserId(req, res);
     req.body.userId = userId;
