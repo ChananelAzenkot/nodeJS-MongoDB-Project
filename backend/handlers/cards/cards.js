@@ -1,7 +1,7 @@
-const { guard } = require("../../guards");
+const { guard, adminGuard } = require("../../guards");
 const { businessGuard } = require("../../guards");
 const { Card } = require("../cards/cards.model");
-const jwt = require("../../config/config");
+const { getLoggedUserId } = require("../../config/config");
 
 module.exports = (app) => {
   app.get("/api/cards", async (req, res) => {
@@ -14,7 +14,7 @@ module.exports = (app) => {
     res.send(cards);
   });
 
-  app.get("/api/cards/:id", async (req, res) => {
+  app.get("/api/card/:id", async (req, res) => {
     const card = await Card.findById(req.params.id);
 
     if (!card) {
@@ -24,11 +24,7 @@ module.exports = (app) => {
     res.send(card);
   });
 
-  app.post("/api/cards", businessGuard, async (req, res) => {
-    const { getLoggedUserId } = jwt(
-      req.headers.authorization,
-      process.env.JWT_SECRET
-    );
+  app.post("/api/addCard", businessGuard, async (req, res) => {
     const { userId } = getLoggedUserId(req, res);
     req.body.userId = userId;
     if (!req.body.userId) {
@@ -40,11 +36,7 @@ module.exports = (app) => {
     }
   });
 
-  app.put("/api/cards/:id", businessGuard, async (req, res) => {
-    const { getLoggedUserId } = jwt(
-      req.headers.authorization,
-      process.env.JWT_SECRET
-    );
+  app.put("/api/card/:id", businessGuard, async (req, res) => {
     const { userId } = getLoggedUserId(req, res);
     req.body.userId = userId;
     if (!req.body.userId) {
@@ -58,27 +50,42 @@ module.exports = (app) => {
         return res.status(404).send("Card not found");
       }
 
-      res.send(card);
+      res.send(card + "Card updated successfully");
     }
   });
 
-  app.delete("/api/cards/:id", businessGuard, async (req, res) => {
-    const { getLoggedUserId } = jwt(
-      req.headers.authorization,
-      process.env.JWT_SECRET
-    );
-    const { userId } = getLoggedUserId(req, res);
-    req.body.userId = userId;
-    if (!req.body.userId) {
-      return res.status(403).send("User not authorized");
-    } else {
-      const card = await Card.findByIdAndRemove(req.params.id);
-
-      if (!card) {
-        return res.status(404).send("Card not found");
-      }
-
-      res.send(card);
+app.patch("/api/cardLike/:id", businessGuard, async (req, res) => {
+  const { userId } = getLoggedUserId(req, res);
+  if (!userId) {
+    return res.status(403).send("User not authorized");
+  } else {
+    const card = await Card.findById(req.params.id);
+    if (!card) {
+      return res.status(404).send("Card not found");
     }
-  });
+
+    if (!card.likes.includes(userId)) {
+      card.likes.push(userId);
+      await card.save();
+    }
+
+    res.send("Card updated " + card.likes);
+  }
+});
+
+app.delete("/api/card/:id", businessGuard, async (req, res) => {
+  const { userId } = getLoggedUserId(req, res);
+  req.body.userId = userId;
+  if (!req.body.userId) {
+    return res.status(403).send("User not authorized");
+  } else {
+    const card = await Card.findByIdAndDelete(req.params.id);
+
+    if (!card) {
+      return res.status(404).send("Card not found");
+    }
+
+    res.send(card + "Card deleted successfully");
+  }
+});
 };
