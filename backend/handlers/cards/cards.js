@@ -69,24 +69,25 @@ app.post("/api/addCard", businessGuard, async (req, res) => {
     }
   });
 
-  app.patch("/api/cardLike/:id", businessGuard, async (req, res) => {
-    const { userId } = getLoggedUserId(req, res);
-    if (!userId) {
-      return res.status(403).send("User not authorized");
-    } else {
-      const card = await Card.findById(req.params.id);
-      if (!card) {
-        return res.status(404).send("Card not found");
-      }
-
-      if (!card.likes.includes(userId)) {
-        card.likes.push(userId);
-        await card.save();
-      }
-
-      res.send("Card updated " + card.likes);
+app.patch("/api/cardLike/:id", businessGuard, async (req, res) => {
+  const { userId } = getLoggedUserId(req, res);
+  if (!userId) {
+    return res.status(403).send("User not authorized");
+  } else {
+    const card = await Card.findById(req.params.id);
+    if (!card) {
+      return res.status(404).send("Card not found");
     }
-  });
+    const index = card.likes.indexOf(userId);
+    if (index === -1) {
+      card.likes.push(userId);
+    } else {
+      card.likes.splice(index, 1);
+    }
+    await card.save();
+    res.send("Card updated " + card.likes);
+  }
+});
 
   app.delete("/api/card/:id", businessGuard, async (req, res) => {
     const { userId } = getLoggedUserId(req, res);
