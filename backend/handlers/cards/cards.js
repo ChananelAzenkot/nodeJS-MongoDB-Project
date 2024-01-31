@@ -2,6 +2,8 @@ const { guard, adminGuard } = require("../../guards");
 const { businessGuard } = require("../../guards");
 const { Card } = require("../cards/cards.model");
 const { getLoggedUserId } = require("../../config/config");
+const Joi = require("joi");
+const {middlewareCards} = require("../../middleware/middlewareCards");
 
 module.exports = (app) => {
   app.get("/api/cards", async (req, res) => {
@@ -37,6 +39,7 @@ module.exports = (app) => {
 
     res.send(card);
   });
+
 app.post("/api/addCard", businessGuard, async (req, res) => {
   const { userId } = getLoggedUserId(req, res);
 
@@ -45,6 +48,11 @@ app.post("/api/addCard", businessGuard, async (req, res) => {
   }
 
   req.body.user_id = userId;
+
+  const { error } = middlewareCards.validate(req.body);
+  if (error) {
+    return res.status(400).send(error.details[0].message);
+  }
 
   const card = new Card(req.body);
   const newCard = await card.save();

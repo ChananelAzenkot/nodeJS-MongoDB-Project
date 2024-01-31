@@ -3,9 +3,14 @@ const jwt = require("jsonwebtoken");
 const { getLoggedUserId } = require("../../config/config");
 const { guard } = require("../../guards");
 const { User } = require("./models/user.model");
+const { middlewareLogin } = require("../../middleware/middlewareLogin");
 
 module.exports = (app) => {
   app.post("/users/login", async (req, res) => {
+      const { error } = middlewareLogin.validate(req.body);
+      if (error) {
+        return res.status(400).send(error.details[0].message);
+      }
     const { email, password } = req.body;
 
     if (!email || !password) {
