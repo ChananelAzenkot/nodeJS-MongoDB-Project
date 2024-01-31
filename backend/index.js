@@ -29,7 +29,7 @@ app.listen(4000);
 
 morgan.token("time", () => moment().format("YYYY-MM-DD HH:mm:ss"));
 const morganFormat = ":time :method :url :status :response-time ms";
-app.use(morgan(morganFormat));
+app.use(morgan(chalk.bgMagenta(morganFormat)));
 
 app.get('/', (req, res) => res.send("Hello World!"));
 require('./handlers/users/login')(app);
