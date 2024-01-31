@@ -72,10 +72,25 @@ app.post("/api/addCard", businessGuard, async (req, res) => {
       if (!card) {
         return res.status(404).send("Card not found");
       }
-
       res.send(card + "Card updated successfully");
     }
   });
+
+app.put("/api/bizNumber/:id", adminGuard, async (req, res) => {
+  const newBizNumber = req.body.bizNumber;
+
+  const card = await Card.findOne({ bizNumber: newBizNumber });
+  if (card) {
+    return res.status(400).json({ message: 'BizNumber is already in use' });
+  }
+
+  const updatedCard = await Card.findByIdAndUpdate(req.params.id, { bizNumber: newBizNumber }, { new: true });
+  if (!updatedCard) {
+    return res.status(404).json({ message: 'Card not found' });
+  }
+
+  res.json(updatedCard);
+});
 
 app.patch("/api/cardLike/:id", businessGuard, async (req, res) => {
   const { userId } = getLoggedUserId(req, res);
