@@ -89,19 +89,24 @@ app.patch("/api/cardLike/:id", businessGuard, async (req, res) => {
   }
 });
 
-  app.delete("/api/card/:id", businessGuard, async (req, res) => {
-    const { userId } = getLoggedUserId(req, res);
-    req.body.userId = userId;
-    if (!req.body.userId) {
-      return res.status(403).send("User not authorized");
-    } else {
-      const card = await Card.findByIdAndDelete(req.params.id);
+app.delete("/api/card/:id", businessGuard, async (req, res) => {
+  const { userId } = getLoggedUserId(req, res);
 
-      if (!card) {
-        return res.status(404).send("Card not found");
-      }
+  if (!userId) {
+    return res.status(403).send("User not authorized");
+  } else {
+    const card = await Card.findById(req.params.id);
 
-      res.send(card + "Card deleted successfully");
+    if (!card) {
+      return res.status(404).send("Card not found");
     }
-  });
+
+    if (card.user_id.toString() !== userId) {
+      return res.status(403).send("User not authorized to delete this card");
+    }
+
+    await Card.findByIdAndDelete(req.params.id);
+    res.send("Card deleted successfully");
+  }
+});
 };
