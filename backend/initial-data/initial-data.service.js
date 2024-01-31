@@ -1,6 +1,7 @@
 const { User } = require("../handlers/users/models/user.model");
 const { Card } = require("../handlers/cards/cards.model");
 const { users, cards } = require("./initial-data.json");
+const bcrypt = require("bcrypt");
 
 const initialDataStart = async () => {
   const userAmount = await User.find().countDocuments();
@@ -9,6 +10,7 @@ const initialDataStart = async () => {
     const userIds = [];
 
     for (const u of users) {
+      u.password = await bcrypt.hash(u.password, 10);
       const user = new User(u);
       const obj = await user.save();
 
