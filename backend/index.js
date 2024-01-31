@@ -3,6 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const chalk = require("chalk");
+const morgan = require("morgan");
+const moment = require("moment");
 
 
   async function main() {
@@ -24,6 +26,10 @@ app.use(cors({
 }));
 
 app.listen(4000);
+
+morgan.token("time", () => moment().format("YYYY-MM-DD HH:mm:ss"));
+const morganFormat = ":time :method :url :status :response-time ms";
+app.use(morgan(morganFormat));
 
 app.get('/', (req, res) => res.send("Hello World!"));
 require('./handlers/users/login')(app);

@@ -21,7 +21,8 @@
     "jsonwebtoken": "^9.0.2",
     "koi": "^0.1.1",
     "moment": "^2.30.1",
-    "mongoose": "^8.1.0"
+    "mongoose": "^8.1.0",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3"
