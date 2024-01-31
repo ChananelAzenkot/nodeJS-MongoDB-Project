@@ -7,7 +7,7 @@ const chalk = require("chalk");
 
   async function main() {
     await mongoose.connect(process.env.REMOTE_URL);
-    console.log(chalk.blue("mongodb connection established on port 27017"));
+    console.log(chalk.bgBlue("mongodb connection established on port 27017"));
   }
 
 main().catch(err => console.log(err));
