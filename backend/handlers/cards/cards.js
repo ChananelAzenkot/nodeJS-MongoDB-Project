@@ -59,22 +59,27 @@ app.post("/api/addCard", businessGuard, async (req, res) => {
   res.send(newCard);
 });
 
-  app.put("/api/card/:id", businessGuard, async (req, res) => {
-    const { userId } = getLoggedUserId(req, res);
-    req.body.userId = userId;
-    if (!req.body.userId) {
-      return res.status(403).send("User not authorized");
-    } else {
-      const card = await Card.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-      });
+app.put("/api/card/:id", businessGuard, async (req, res) => {
+  const { userId } = getLoggedUserId(req, res);
+  if (!userId) {
+    return res.status(403).send("User not authorized");
+  }
 
-      if (!card) {
-        return res.status(404).send("Card not found");
-      }
-      res.send(card + "Card updated successfully");
-    }
+  req.body.userId = userId;
+  const { error } = middlewareCards.validate(req.body);
+  if (error) {
+    return res.status(400).send(error.details[0].message);
+  }
+
+  const card = await Card.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
   });
+
+  if (!card) {
+    return res.status(404).send("Card not found");
+  }
+  res.send("Card updated successfully");
+});
 
 app.put("/api/bizNumber/:id", adminGuard, async (req, res) => {
   const newBizNumber = req.body.bizNumber;

@@ -36,6 +36,9 @@ exports.middlewareCards = Joi.object({
       zip: Joi.number(),
     })
     .required(),
-  bizNumber: Joi.number().required(),
-  user_id: Joi.string().required(),
+  userId: Joi.string().allow(""),
+});
+
+exports.middlewareBiz = Joi.object({
+  bizNumber: Joi.number().allow(""),
 });
