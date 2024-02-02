@@ -53,6 +53,9 @@ app.post("/api/addCard", businessGuard, async (req, res) => {
   if (error) {
     return res.status(400).send(error.details[0].message);
   }
+  
+  const bizNumber = await Card.generateUniqueBizNumber();
+  req.body.bizNumber = bizNumber;
 
   const card = new Card(req.body);
   const newCard = await card.save();

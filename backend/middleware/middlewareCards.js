@@ -11,7 +11,10 @@ exports.middlewareCards = Joi.object({
     .pattern(/^(0[2-4,8-9][0-9]{7}|0[57,73,74,76-79]{2}[0-9]{7})$/)
     .message('user "phone" must be a valid Israeli phone number')
     .required(),
-
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .message(' "email" must be a valid email address')
+    .required(),
   web: Joi.string()
     .pattern(/(http(s?):)([/|.|\w|\s|-])*\./)
     .message('card "web" must be a valid url')
@@ -37,6 +40,7 @@ exports.middlewareCards = Joi.object({
     })
     .required(),
   userId: Joi.string().allow(""),
+  user_id: Joi.string().allow(""),
 });
 
 exports.middlewareBiz = Joi.object({

@@ -7,13 +7,19 @@ const schema = new Schema({
     first: { type: String },
     middle: { type: String },
     last: { type: String },
+    _id: { type: ObjectId, default: () => new mongoose.Types.ObjectId() },
   },
+  phone: String,
   email: {
     type: String,
     unique: true,
   },
-  phone: String,
   password: String,
+  image: {
+    url: { type: String },
+    alt: { type: String },
+    _id: { type: ObjectId, default: () => new mongoose.Types.ObjectId() },
+  },
   address: {
     state: { type: String },
     country: { type: String },
@@ -21,11 +27,6 @@ const schema = new Schema({
     street: { type: String },
     houseNumber: { type: Number },
     zip: { type: Number },
-    _id: { type: ObjectId, default: () => new mongoose.Types.ObjectId() },
-  },
-  image: {
-    url: { type: String },
-    alt: { type: String },
     _id: { type: ObjectId, default: () => new mongoose.Types.ObjectId() },
   },
   isAdmin: {
