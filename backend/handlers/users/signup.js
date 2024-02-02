@@ -8,7 +8,7 @@ app.post("/signup", async (req, res) => {
     
     const { error } = middlewareUsers.validate(req.body);
     if (error) {
-      return res.status(400).send(error.details[0].message);
+      return res.status(400).json({ message: error.details[0].message });
     }
 
     const userInfo = req.body;
@@ -20,7 +20,7 @@ app.post("/signup", async (req, res) => {
     res.status(201).send("User created successfully");
   } catch (error) {
     if (error.code === 11000) {
-      res.status(409).send("email already exists");
+      res.status(409).json({ message: "Email already exists" });
     }
   }
 });

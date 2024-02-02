@@ -16,17 +16,19 @@ module.exports = (app) => {
       const { userId } = getLoggedUserId(req, res);
 
       if (!userId) {
-        return res.status(403).send("User not authorized");
+        return res.status(403).json({ message: "User not authorized" });
       }
       const cards = await Card.find({ user_id: userId });
 
       if (!cards || cards.length === 0) {
-        return res.status(404).send("No cards found for this user");
+        return res
+          .status(404)
+          .json({ message: "No cards found for this user" });
       }
       res.send(cards);
     } catch (error) {
       console.log(error);
-      res.status(500).send(" Server Error");
+      res.status(500).json({ message: "Server Error" });
     }
   });
 
@@ -34,7 +36,7 @@ module.exports = (app) => {
     const card = await Card.findById(req.params.id);
 
     if (!card) {
-      return res.status(404).send("Card not found");
+      return res.status(404).json({ message: "Card not found" });
     }
 
     res.send(card);
@@ -44,7 +46,7 @@ app.post("/api/addCard", businessGuard, async (req, res) => {
   const { userId } = getLoggedUserId(req, res);
 
   if (!userId) {
-    return res.status(403).send("User not authorized");
+    return res.status(403).json({ message: "User not authorized" });
   }
 
   req.body.user_id = userId;
@@ -53,7 +55,7 @@ app.post("/api/addCard", businessGuard, async (req, res) => {
   if (error) {
     return res.status(400).send(error.details[0].message);
   }
-  
+
   const bizNumber = await Card.generateUniqueBizNumber();
   req.body.bizNumber = bizNumber;
 
@@ -65,7 +67,7 @@ app.post("/api/addCard", businessGuard, async (req, res) => {
 app.put("/api/card/:id", businessGuard, async (req, res) => {
   const { userId } = getLoggedUserId(req, res);
   if (!userId) {
-    return res.status(403).send("User not authorized");
+    return res.status(403).json({ message: "User not authorized" });
   }
 
   req.body.userId = userId;
@@ -79,7 +81,7 @@ app.put("/api/card/:id", businessGuard, async (req, res) => {
   });
 
   if (!card) {
-    return res.status(404).send("Card not found");
+    return res.status(404).json({ message: "Card not found" });
   }
   res.send("Card updated successfully");
 });
@@ -97,17 +99,17 @@ app.put("/api/bizNumber/:id", adminGuard, async (req, res) => {
     return res.status(404).json({ message: 'Card not found' });
   }
 
-  res.json(updatedCard);
+  res.send("BizNumber updated successfully");
 });
 
 app.patch("/api/cardLike/:id", businessGuard, async (req, res) => {
   const { userId } = getLoggedUserId(req, res);
   if (!userId) {
-    return res.status(403).send("User not authorized");
+    return res.status(403).json({ message: "User not authorized" });
   } else {
     const card = await Card.findById(req.params.id);
     if (!card) {
-      return res.status(404).send("Card not found");
+      return res.status(404).json({ message: "Card not found" });
     }
     const index = card.likes.indexOf(userId);
     if (index === -1) {
@@ -124,16 +126,18 @@ app.delete("/api/card/:id", businessGuard, async (req, res) => {
   const { userId } = getLoggedUserId(req, res);
 
   if (!userId) {
-    return res.status(403).send("User not authorized");
+    return res.status(403).json({ message: "User not authorized" });
   } else {
     const card = await Card.findById(req.params.id);
 
     if (!card) {
-      return res.status(404).send("Card not found");
+      return res.status(404).json({ message: "Card not found" });
     }
 
     if (card.user_id.toString() !== userId) {
-      return res.status(403).send("User not authorized to delete this card");
+      return res
+        .status(403)
+        .json({ message: "User not authorized to delete this card" });
     }
 
     await Card.findByIdAndDelete(req.params.id);

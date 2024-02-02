@@ -9,25 +9,29 @@ module.exports = (app) => {
   app.post("/users/login", async (req, res) => {
       const { error } = middlewareLogin.validate(req.body);
       if (error) {
-        return res.status(400).send(error.details[0].message);
+        return res.status(400).json({ message: error.details[0].message });
       }
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(403).send("Inputs can't be empty");
+      return res.status(403).json({ message: "Inputs can't be empty" });
     }
 
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(403).send("email or password is incorrect 1");
+      return res
+        .status(403)
+        .json({ message: "email or password is incorrect" });
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
       console.log(password);
-      return res.status(403).send("email or password is incorrect 2");
+      return res
+        .status(403)
+        .json({ message: "email or password is incorrect" });
     }
 
     const token = jwt.sign(
@@ -56,7 +60,7 @@ module.exports = (app) => {
     const user = await User.findById(userId).select("-password");
 
     if (!user) {
-      return res.status(403).send("User not found");
+      return res.status(403).json({ message: "User not found" });
     }
 
     res.send(user);
@@ -67,19 +71,19 @@ module.exports = (app) => {
     const user = await User.findById(userId);
 
     if (userId !== req.params.id && !user?.isAdmin) {
-      return res.status(401).send("User not authorized");
+      return res.status(401).json({ message: "User not authorized" });
     }
 
     try {
       const user = await User.findById(req.params.id).select("-password");
 
       if (!user) {
-        return res.status(403).send("User not found");
+        return res.status(403).json({ message: "User not found" });
       }
 
       res.send(user);
     } catch (err) {
-      return res.status(403).send("User not found");
+      return res.status(403).json({ message: "User not found" });
     }
   });
 
@@ -87,7 +91,7 @@ module.exports = (app) => {
     const { userId } = getLoggedUserId(req, res);
 
     if (userId !== req.params.id) {
-      return res.status(401).send("User not authorized");
+      return res.status(401).json({ message: "User not authorized" });
     }
 
     const user = await User.findById(req.params.id);
