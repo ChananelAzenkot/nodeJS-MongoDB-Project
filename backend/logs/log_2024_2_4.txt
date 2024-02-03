@@ -339,3 +339,57 @@ Route: /
 Status: 404
 Response: {"message":"Sorry, page not found 404"}
 
+Time: 04-02-2024 01:10:17
+Method: GET
+Route: /
+Status: 404
+Response: "{\"message\":\"Sorry, page not found 404\"}"
+
+Time: 04-02-2024 01:11:13
+Method: GET
+Route: /
+Status: 404
+Response: "Route not found"
+
+Time: 04-02-2024 01:11:59
+Method: POST
+Route: /users/login
+Status: 403
+Response: "{\"message\":\"email or password is incorrect\"}"
+
+Time: 04-02-2024 01:12:33
+Method: POST
+Route: /users/login
+Status: 403
+Response: {"message":"email or password is incorrect"}
+
+Time: 04-02-2024 01:16:07
+Method: GET
+Route: /
+Status: 404
+Response: "Route not found"
+
+Time: 04-02-2024 01:16:41
+Method: POST
+Route: /users/login
+Status: 403
+Response: "{\"message\":\"email or password is incorrect\"}"
+
+Time: 04-02-2024 01:18:52
+Method: POST
+Route: /users/login
+Status: 403
+Response: {"message":"email or password is incorrect"}
+
+Time: 04-02-2024 01:19:35
+Method: GET
+Route: /
+Status: 404
+Response: undefined
+
+Time: 04-02-2024 01:20:26
+Method: GET
+Route: /
+Status: 404
+Response: "Route not found"
+

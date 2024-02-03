@@ -39,6 +39,20 @@ app.use((req, res, next) => {
     oldJson.apply(res, arguments);
   };
 
+//  const oldSend = res.send;
+
+// res.send = function(data) {
+//   responseBody = data;
+//   oldSend.apply(res, arguments);
+// };
+
+// const oldSendFile = res.sendFile;
+
+// res.sendFile = function(path) {
+//   responseBody = { file: path };
+//   oldSendFile.apply(res, arguments);
+// };
+
   res.on('finish', () => {
     if (res.statusCode >= 400) {
       let content = "";
