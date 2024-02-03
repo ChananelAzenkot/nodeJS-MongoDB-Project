@@ -4,6 +4,7 @@ const { getLoggedUserId } = require("../../config/config");
 const { guard } = require("../../guards");
 const { User } = require("./models/user.model");
 const { middlewareLogin } = require("../../middleware/middlewareLogin");
+const { json } = require("express");
 
 module.exports = (app) => {
 app.post("/users/login", async (req, res) => {
@@ -118,4 +119,8 @@ app.post("/users/login", async (req, res) => {
 
     res.end();
   });
+
+app.use("*", (req, res) => {
+  res.status(404).json({ message: "Sorry, page not found 404" });
+});
 };

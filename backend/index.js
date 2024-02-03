@@ -7,6 +7,7 @@ const morgan = require("morgan");
 const moment = require("moment");
 const fs = require("fs");
 const { format } = require("date-fns");
+const path = require("path");
 
 
   async function main() {
@@ -58,14 +59,16 @@ app.use((req, res, next) => {
 });
 
 app.listen(4000);
+app.use(express.static("public"));
+
 
 morgan.token("time", () => moment().format("YYYY-MM-DD HH:mm:ss"));
 const morganFormat = ":time :method :url :status :response-time ms";
 app.use(morgan(chalk.bgMagenta(morganFormat)));
 
-app.get('/', (req, res) => res.send("Hello World!"));
 require('./handlers/users/login')(app);
 require('./handlers/users/signup')(app);
 require('./initial-data/initial-data.service');
 require('./handlers/cards/cards')(app);
 require('./handlers/users/models/users')(app);
+
