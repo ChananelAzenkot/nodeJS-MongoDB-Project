@@ -471,3 +471,9 @@ Route: /jgjgbj
 Status: 404
 Response: {"message":"Sorry, page not found 404"}
 
+Time: 04-02-2024 02:56:02
+Method: POST
+Route: /signup
+Status: 409
+Response: {"message":"Email already exists"}
+
