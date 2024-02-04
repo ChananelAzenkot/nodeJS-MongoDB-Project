@@ -1059,3 +1059,9 @@ Route: /api/bizNumber/65bfd2ad1d09cb8074d4c198
 Status: 400
 Response: {"message":"BizNumber must be a 9 digit number"}
 
+Time: 04-02-2024 22:27:59
+Method: GET
+Route: /dgdssdgsd
+Status: 404
+Response: {"message":"Sorry, page not found 404"}
+

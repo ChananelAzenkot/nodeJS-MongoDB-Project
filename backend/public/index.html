@@ -1,33 +1,28 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File transfer</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+    <title>Tech Stack Overview</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
 </head>
-
 <body>
-    <h1>File transfer</h1>
+    <h1>Backend Development with Node.js and MongoDB</h1>
+    <p>
+        Node.js is a powerful JavaScript runtime, commonly used for building scalable and efficient backend applications.
+        MongoDB, a NoSQL database, is often chosen for its flexibility and scalability in handling large amounts of data.
 
-    <div class="container">
-        <form class="card" action="http://localhost:9600/file-upload" method="post" enctype="multipart/form-data">
-            <label class="form-label">
-                Choose file:
-                <input class="form-control" type="file" name="myFile">
-            </label>
-
-            <button class="btn btn-primary">Upload</button>
-        </form>
-    </div>
+        Key packages for Node.js development include:
+        <ul>
+            <li>Bcrypt: Hashing passwords for secure authentication.</li>
+            <li>Joi: Schema validation for data input.</li>
+            <li>JsonWebToken: Token-based authentication.</li>
+            <li>Config: Configuration management.</li>
+            <li>Morgan: HTTP request logger middleware.</li>
+            <li>Cors: Cross-Origin Resource Sharing for handling cross-origin requests.</li>
+            <li>Chalk: Terminal string styling for better logging.</li>
+            <li>Mongoose: MongoDB object modeling for Node.js.</li>
+        </ul>
+    </p>
 </body>
-
 </html>
