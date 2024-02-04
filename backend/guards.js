@@ -3,40 +3,56 @@ const { getLoggedUserId } = require("./config/config");
 
 
 exports.guard = (req, res, next) => {
-  jwt.verify(req.headers.authorization, process.env.JWT_SECRET, (err, data) => {
-    if (err) {
-      res.status(401).json({ message: "User not authorized for this user" });
-    } else {
-      next();
-    }
-  });
+  try {
+    jwt.verify(req.headers.authorization, process.env.JWT_SECRET, (err, data) => {
+      if (err) {
+        throw new Error("User not authorized for this user");
+      } else {
+        next();
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
 };
 
 exports.businessGuard = (req, res, next) => {
-  const { IsBusiness, isAdmin } = getLoggedUserId(req, res);
+  try {
+    const { IsBusiness, isAdmin } = getLoggedUserId(req, res);
 
-  if (IsBusiness || isAdmin) {
-    next();
-  } else {
-    res.status(401).json({ message: "User not authorized" });
+    if (IsBusiness || isAdmin) {
+      next();
+    } else {
+      res.status(401).json({ message: "User not authorized" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
 exports.adminGuard = (req, res, next) => {
-  const user = getLoggedUserId(req, res);
+  try {
+    const user = getLoggedUserId(req, res);
 
-  if (!user) {
-    return res.status(401).json({ message: "you don't have permission to do this" });
-  }
+    if (!user) {
+      return res.status(401).json({ message: "you don't have permission to do this" });
+    }
 
-  const { userId, isAdmin } = getLoggedUserId(req, res);
+    const { userId, isAdmin } = getLoggedUserId(req, res);
 
-  if (isAdmin || userId === req.params.id) {
-    next();
-  } else {
-    res.status(401).json({ message: "User not authorized" });
+    if (isAdmin || userId === req.params.id) {
+      next();
+    } else {
+      res.status(401).json({ message: "User not authorized" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
 };
+
 
 
 

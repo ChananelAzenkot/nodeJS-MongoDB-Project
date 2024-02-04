@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
+const bcrypt = require("bcrypt");
 const schema = new Schema({
   name: {
     first: { type: String },
@@ -40,4 +41,12 @@ const schema = new Schema({
   loginAttempts: { type: Number, required: true, default: 0 },
   lockUntil: { type: Date },
 });
+
+schema.pre("save", async function (next) {
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
+  next();
+});
+
 exports.User = mongoose.model("users", schema);

@@ -44,5 +44,5 @@ exports.middlewareCards = Joi.object({
 });
 
 exports.middlewareBiz = Joi.object({
-  bizNumber: Joi.number().allow(""),
+  newBizNumber: Joi.number().min(100000000).max(999999999),
 });

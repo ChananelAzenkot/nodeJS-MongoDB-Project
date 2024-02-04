@@ -40,4 +40,5 @@ exports.middlewareUsers = Joi.object({
     alt: Joi.string().min(2).max(50).allow(""),
   }),
   IsBusiness: Joi.boolean().allow(""),
+  userId: Joi.string().allow(""),
 });
