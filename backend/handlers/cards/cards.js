@@ -155,7 +155,7 @@ app.patch("/api/cardLike/:id", businessGuard, async (req, res) => {
   }
 });
 // delete a card by id //
-app.delete("/api/card/:id", businessGuard, adminGuard, async (req, res) => {
+app.delete("/api/card/:id", businessGuard, async (req, res) => {
   try {
     const { userId, isAdmin } = getLoggedUserId(req, res);
 
