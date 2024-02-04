@@ -3,7 +3,7 @@ const { Card } = require("../handlers/cards/cards.model");
 const { users, cards } = require("./initial-data.json");
 const bcrypt = require("bcrypt");
 const chalk = require("chalk");
-
+// upload the initial data to the database //
 const initialDataStart = async () => {
   const userAmount = await User.find().countDocuments();
 

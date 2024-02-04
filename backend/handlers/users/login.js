@@ -7,6 +7,7 @@ const { middlewareLogin } = require("../../middleware/middlewareLogin");
 const { json } = require("express");
 
 module.exports = (app) => {
+  // login to the system and get a token //
 app.post("/users/login", async (req, res) => {
   try {
     const { error } = middlewareLogin.validate(req.body);
@@ -71,7 +72,7 @@ app.post("/users/login", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-
+// get all users in the system //
 app.get("/users", guard, async (req, res) => {
   try {
     const users = await User.find().select("-password");
@@ -81,7 +82,7 @@ app.get("/users", guard, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-
+// get the logged user details //
 app.get("/users/me", guard, async (req, res) => {
   try {
     const { userId } = getLoggedUserId(req, res);
@@ -97,7 +98,7 @@ app.get("/users/me", guard, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-
+// get a specific by id user details //
   app.get("/users/:id", guard, async (req, res) => {
     const { userId } = getLoggedUserId(req, res);
     const user = await User.findById(userId);
@@ -118,7 +119,7 @@ app.get("/users/me", guard, async (req, res) => {
       return res.status(403).json({ message: "User not found" });
     }
   });
-
+  // update the business status of a user //
 app.patch("/users/:id", guard, async (req, res) => {
   try {
     const { userId } = getLoggedUserId(req, res);

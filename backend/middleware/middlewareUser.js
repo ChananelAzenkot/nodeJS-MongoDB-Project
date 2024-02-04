@@ -1,5 +1,5 @@
 const Joi = require("joi");
-
+// joi is a validation library of User // 
 exports.middlewareUsers = Joi.object({
   name: Joi.object()
     .keys({

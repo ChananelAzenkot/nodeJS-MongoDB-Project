@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const { getLoggedUserId } = require("./config/config");
 
-
+// verify the token for the user as guard //
 exports.guard = (req, res, next) => {
   try {
     jwt.verify(req.headers.authorization, process.env.JWT_SECRET, (err, data) => {
@@ -16,7 +16,7 @@ exports.guard = (req, res, next) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-
+// verify the token for the user as businessGuard //
 exports.businessGuard = (req, res, next) => {
   try {
     const { IsBusiness, isAdmin } = getLoggedUserId(req, res);
@@ -31,7 +31,7 @@ exports.businessGuard = (req, res, next) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-
+// verify the token for the user as adminGuard //
 exports.adminGuard = (req, res, next) => {
   try {
     const user = getLoggedUserId(req, res);

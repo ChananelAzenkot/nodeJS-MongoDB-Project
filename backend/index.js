@@ -8,9 +8,10 @@ const moment = require("moment");
 const fs = require("fs");
 const { format } = require("date-fns");
 
+// Connect to MongoDB //
   async function main() {
     await mongoose.connect(process.env.REMOTE_URL);
-    console.log(chalk.bgBlue("mongodb connection established on port 27017"));
+    console.log(chalk.bgYellowBright("MongoDB Connected on port 27017"));
   }
 
 main().catch(err => console.log(err));
@@ -26,6 +27,7 @@ app.use(cors({
     allowedHeaders: 'Content-Type, Accept, Authorization',
 }));
 
+// Log the requests //
 app.use((req, res, next) => {
   const fileName = `./logs/log_${moment().format("Y_M_D")}.txt`;
   let responseBody;
@@ -36,20 +38,6 @@ app.use((req, res, next) => {
     responseBody = data;
     oldJson.apply(res, arguments);
   };
-
-//  const oldSend = res.send;
-
-// res.send = function(data) {
-//   responseBody = data;
-//   oldSend.apply(res, arguments);
-// };
-
-// const oldSendFile = res.sendFile;
-
-// res.sendFile = function(path) {
-//   responseBody = { file: path };
-//   oldSendFile.apply(res, arguments);
-// };
 
   res.on('finish', () => {
     if (res.statusCode >= 400) {
@@ -69,10 +57,14 @@ app.use((req, res, next) => {
 
   next();
 });
-
-app.listen(4000);
+// Start the server //
+app.listen(4000, () => {
+  console.log(chalk.italic.bgCyan("Server is running on port 4000"));
+});
+// Serve the static files //
 app.use(express.static("public"));
 
+// Log the requests to the terminal //
 morgan.token("time", () => moment().format("YYYY-MM-DD HH:mm:ss"));
 const morganFormat = ":time :method :url :status :response-time ms";
 app.use(morgan(chalk.bgMagenta(morganFormat)));

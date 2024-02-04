@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-
+// create a token for the user //
 exports.getLoggedUserId = (req, res) => {
   try {
     if (!req.headers.authorization) {

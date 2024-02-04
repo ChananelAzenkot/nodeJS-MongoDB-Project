@@ -8,6 +8,7 @@ const Joi = require("joi");
 const { middlewareUsers } = require("../../../middleware/middlewareUser");
 
 module.exports = (app) => {
+  // get all users for admin users //
 app.get("/api/users", adminGuard, async (req, res) => {
   try {
     const users = await User.find();
@@ -17,7 +18,7 @@ app.get("/api/users", adminGuard, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-
+  // get the user logged for user and admin users //
 app.get("/api/user/:id", adminGuard, guard, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -34,7 +35,7 @@ app.get("/api/user/:id", adminGuard, guard, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-
+// edit the user logged for user and admin users //
 app.put("/api/user/:id", adminGuard, guard, async (req, res) => {
   try {
     const user = getLoggedUserId(req, res);
@@ -64,6 +65,7 @@ app.put("/api/user/:id", adminGuard, guard, async (req, res) => {
   }
 });
 
+// change the user to business or not for admin and user  //
 app.patch("/api/user/:id", guard, businessGuard, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -81,6 +83,7 @@ app.patch("/api/user/:id", guard, businessGuard, async (req, res) => {
   }
 });
 
+// delete the user for admin users //
 app.delete("/api/user/:id", guard, adminGuard, async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);

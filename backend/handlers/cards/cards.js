@@ -6,6 +6,7 @@ const Joi = require("joi");
 const {middlewareCards} = require("../../middleware/middlewareCards");
 
 module.exports = (app) => {
+  // get all cards users //
 app.get("/api/cards", async (req, res) => {
   try {
     const cards = await Card.find();
@@ -14,7 +15,7 @@ app.get("/api/cards", async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });
-
+  // get all cards of the logged user //
   app.get("/api/my-cards", guard, async (req, res) => {
     try {
       const { userId } = getLoggedUserId(req, res);
@@ -35,7 +36,7 @@ app.get("/api/cards", async (req, res) => {
       res.status(500).json({ message: "Server Error" });
     }
   });
-
+  // get a specific card by id //
 app.get("/api/card/:id", async (req, res) => {
   try {
     const card = await Card.findById(req.params.id);
@@ -52,7 +53,7 @@ app.get("/api/card/:id", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-
+  // add a new card //
 app.post("/api/addCard", businessGuard, async (req, res) => {
   const { userId } = getLoggedUserId(req, res);
 
@@ -79,7 +80,7 @@ app.post("/api/addCard", businessGuard, async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });
-
+// update a card by id //
 app.put("/api/card/:id", businessGuard, async (req, res) => {
   const { userId } = getLoggedUserId(req, res);
   if (!userId) {
@@ -105,7 +106,7 @@ app.put("/api/card/:id", businessGuard, async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });
-
+// update a card bizNumber by id //
 app.put("/api/bizNumber/:id", adminGuard, async (req, res) => {
   const newBizNumber = req.body.bizNumber;
 
@@ -118,7 +119,7 @@ app.put("/api/bizNumber/:id", adminGuard, async (req, res) => {
     if (newBizNumber < 100000000 || newBizNumber > 999999999) {
       return res.status(400).json({ message: 'BizNumber must be a 9 digit number' });
     }
-    
+
     const updatedCard = await Card.findByIdAndUpdate(req.params.id, { bizNumber: newBizNumber }, { new: true });
     if (!updatedCard) {
       return res.status(404).json({ message: 'Card not found' });
@@ -129,7 +130,7 @@ app.put("/api/bizNumber/:id", adminGuard, async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });
-
+// like a card by id //
 app.patch("/api/cardLike/:id", businessGuard, async (req, res) => {
   const { userId } = getLoggedUserId(req, res);
   if (!userId) {
@@ -153,7 +154,7 @@ app.patch("/api/cardLike/:id", businessGuard, async (req, res) => {
     }
   }
 });
-
+// delete a card by id //
 app.delete("/api/card/:id", businessGuard, adminGuard, async (req, res) => {
   try {
     const { userId, isAdmin } = getLoggedUserId(req, res);

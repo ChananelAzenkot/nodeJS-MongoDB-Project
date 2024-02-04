@@ -1,5 +1,5 @@
 const Joi = require("joi");
-
+// joi is a validation library of Cards // 
 exports.middlewareCards = Joi.object({
   title: Joi.string().required().min(2).max(100),
 

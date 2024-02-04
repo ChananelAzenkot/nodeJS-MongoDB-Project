@@ -1,5 +1,5 @@
 const Joi = require("joi");
-
+// joi is a validation library of Login // 
 exports.middlewareLogin = Joi.object({
   email: Joi.string()
     .email({ tlds: { allow: false } })
