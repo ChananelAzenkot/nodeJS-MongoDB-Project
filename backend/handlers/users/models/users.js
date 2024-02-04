@@ -66,7 +66,7 @@ app.put("/api/user/:id", adminGuard, guard, async (req, res) => {
 });
 
 // change the user to business or not for admin and user  //
-app.patch("/api/user/:id", guard, businessGuard, async (req, res) => {
+app.patch("/api/user/:id", guard, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) {
