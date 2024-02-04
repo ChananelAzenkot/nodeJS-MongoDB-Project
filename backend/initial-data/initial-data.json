@@ -8,7 +8,7 @@
             "IsBusiness": false,
             "phone": "050-0000000",
             "email": "regular@gmail.com",
-            "password": "Aa123456!",
+            "password": "Fdr1211231!@",
             "address": {
                 "country": "israel",
                 "city": "tel-aviv",
@@ -28,7 +28,7 @@
             "IsBusiness": true,
             "phone": "050-0000000",
             "email": "business@gmail.com",
-            "password": "Aa123456!",
+            "password": "Fdr1211231!@",
             "address": {
                 "country": "israel",
                 "city": "tel-aviv",
@@ -49,7 +49,7 @@
             "isAdmin": true,
             "phone": "050-0000000",
             "email": "admin@gmail.com",
-            "password": "Abc!123Abc",
+            "password": "Fdr1211231!@",
             "address": {
                 "country": "israel",
                 "city": "tel-aviv",

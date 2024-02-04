@@ -1,0 +1,90 @@
+Time: 05-02-2024 00:08:15
+Method: POST
+Route: /users/login
+Status: 403
+Response: {"message":"email or password is incorrect"}
+
+Time: 05-02-2024 00:11:38
+Method: POST
+Route: /users/login
+Status: 403
+Response: {"message":"email or password is incorrect"}
+
+Time: 05-02-2024 00:13:46
+Method: POST
+Route: /users/login
+Status: 403
+Response: {"message":"email or password is incorrect"}
+
+Time: 05-02-2024 00:16:11
+Method: POST
+Route: /users/login
+Status: 403
+Response: {"message":"email or password is incorrect"}
+
+Time: 05-02-2024 00:16:13
+Method: POST
+Route: /users/login
+Status: 403
+Response: {"message":"email or password is incorrect"}
+
+Time: 05-02-2024 00:17:11
+Method: POST
+Route: /users/login
+Status: 403
+Response: {"message":"email or password is incorrect"}
+
+Time: 05-02-2024 00:17:49
+Method: POST
+Route: /users/login
+Status: 403
+Response: {"message":"email or password is incorrect"}
+
+Time: 05-02-2024 00:20:47
+Method: POST
+Route: /users/login
+Status: 403
+Response: {"message":"email or password is incorrect"}
+
+Time: 05-02-2024 00:21:34
+Method: POST
+Route: /signup
+Status: 409
+Response: {"message":"Email already exists"}
+
+Time: 05-02-2024 00:25:11
+Method: POST
+Route: /users/login
+Status: 403
+Response: {"message":"email or password is incorrect"}
+
+Time: 05-02-2024 00:25:45
+Method: POST
+Route: /users/login
+Status: 403
+Response: {"message":"email or password is incorrect"}
+
+Time: 05-02-2024 00:25:46
+Method: POST
+Route: /users/login
+Status: 403
+Response: {"message":"email or password is incorrect"}
+
+Time: 05-02-2024 00:25:47
+Method: POST
+Route: /users/login
+Status: 403
+Response: {"message":"Your account has been locked due to too many failed login attempts. Please try again later."}
+
+Time: 05-02-2024 00:25:47
+Method: POST
+Route: /users/login
+Status: 403
+Response: {"message":"Your account has been locked due to too many failed login attempts. Please try again later."}
+
+Time: 05-02-2024 00:26:26
+Method: POST
+Route: /users/login
+Status: 403
+Response: {"message":"email or password is incorrect"}
+
