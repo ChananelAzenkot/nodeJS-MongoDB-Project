@@ -63,7 +63,7 @@ To get started, clone the repository and install the dependencies:
 
 [Clone this repository](https://github.com/ChananelAzenkot/nodeJS-MongoDB-Project.git)
 
-cd [project-directory](https://github.com/ChananelAzenkot/nodeJS-MongoDB-Project/archive/refs/heads/main.zip)
+[project-directory download](https://github.com/ChananelAzenkot/nodeJS-MongoDB-Project/archive/refs/heads/main.zip)
 
 ```bash
 npm install
