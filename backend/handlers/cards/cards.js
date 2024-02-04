@@ -32,7 +32,8 @@ module.exports = (app) => {
     }
   });
 
-  app.get("/api/card/:id", async (req, res) => {
+app.get("/api/card/:id", async (req, res) => {
+  try {
     const card = await Card.findById(req.params.id);
 
     if (!card) {
@@ -40,7 +41,13 @@ module.exports = (app) => {
     }
 
     res.send(card);
-  });
+  } catch (error) {
+    if (error.kind === 'ObjectId') {
+      return res.status(404).json({ message: "Invalid Card ID" });
+    }
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 app.post("/api/addCard", businessGuard, async (req, res) => {
   const { userId } = getLoggedUserId(req, res);

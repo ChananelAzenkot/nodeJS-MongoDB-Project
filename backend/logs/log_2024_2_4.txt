@@ -477,3 +477,75 @@ Route: /signup
 Status: 409
 Response: {"message":"Email already exists"}
 
+Time: 04-02-2024 03:16:57
+Method: POST
+Route: /signup
+Status: 409
+Response: {"message":"Email already exists"}
+
+Time: 04-02-2024 03:18:19
+Method: GET
+Route: /script.js
+Status: 404
+Response: {"message":"Sorry, page not found 404"}
+
+Time: 04-02-2024 03:18:59
+Method: GET
+Route: //api/my-cards
+Status: 404
+Response: {"message":"Sorry, page not found 404"}
+
+Time: 04-02-2024 03:19:05
+Method: GET
+Route: /api/my-cards
+Status: 401
+Response: {"message":"User not authorized for this user"}
+
+Time: 04-02-2024 03:25:36
+Method: GET
+Route: /api/my-cards
+Status: 404
+Response: {"message":"No cards found for this user"}
+
+Time: 04-02-2024 03:33:40
+Method: GET
+Route: /api/card/65ad660083d4dd490a77
+Status: 404
+Response: {"message":"Invalid user ID"}
+
+Time: 04-02-2024 03:34:10
+Method: GET
+Route: /api/card/65ad66008d490a77a479
+Status: 404
+Response: {"message":"Invalid user ID"}
+
+Time: 04-02-2024 03:35:37
+Method: GET
+Route: /api/card/65ad66008d490a77a479
+Status: 404
+Response: {"message":"Invalid Card ID"}
+
+Time: 04-02-2024 03:35:48
+Method: GET
+Route: /api/card/65ad66008d490a77a479
+Status: 404
+Response: {"message":"Invalid Card ID"}
+
+Time: 04-02-2024 03:35:51
+Method: GET
+Route: /api/card/65ad66008d490a77a479
+Status: 404
+Response: {"message":"Invalid Card ID"}
+
+Time: 04-02-2024 03:40:07
+Method: GET
+Route: /api/card/60d6c47e36b8b9c6cd76c314
+Status: 404
+Response: {"message":"Card not found"}
+
+Time: 04-02-2024 03:40:50
+Method: GET
+Route: /api/card/60d6c47e36b8b9c6cd76c31
+Status: 404
+Response: {"message":"Invalid Card ID"}
+
