@@ -423,3 +423,51 @@ Route: /
 Status: 404
 Response: {"message":"Sorry, page not found 404"}
 
+Time: 04-02-2024 02:20:36
+Method: POST
+Route: /
+Status: 404
+Response: {"message":"Sorry, page not found 404"}
+
+Time: 04-02-2024 02:31:17
+Method: POST
+Route: /
+Status: 404
+Response: {"message":"Sorry, page not found 404"}
+
+Time: 04-02-2024 02:31:32
+Method: POST
+Route: /signup
+Status: 404
+Response: {"message":"Sorry, page not found 404"}
+
+Time: 04-02-2024 02:32:54
+Method: POST
+Route: /signup
+Status: 404
+Response: {"message":"Sorry, page not found 404"}
+
+Time: 04-02-2024 02:37:15
+Method: POST
+Route: /signup
+Status: 409
+Response: {"message":"Email already exists"}
+
+Time: 04-02-2024 02:37:44
+Method: GET
+Route: /api/my-cards/fsdggdsgsd
+Status: 404
+Response: {"message":"Sorry, page not found 404"}
+
+Time: 04-02-2024 02:37:49
+Method: GET
+Route: /script.js
+Status: 404
+Response: {"message":"Sorry, page not found 404"}
+
+Time: 04-02-2024 02:37:55
+Method: GET
+Route: /jgjgbj
+Status: 404
+Response: {"message":"Sorry, page not found 404"}
+

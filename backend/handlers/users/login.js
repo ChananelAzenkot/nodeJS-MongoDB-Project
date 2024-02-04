@@ -119,8 +119,4 @@ app.post("/users/login", async (req, res) => {
 
     res.end();
   });
-
-app.use("*", (req, res) => {
-  res.status(404).json({ message: "Sorry, page not found 404" });
-});
 };

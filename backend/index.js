@@ -73,7 +73,6 @@ app.use((req, res, next) => {
 app.listen(4000);
 app.use(express.static("public"));
 
-
 morgan.token("time", () => moment().format("YYYY-MM-DD HH:mm:ss"));
 const morganFormat = ":time :method :url :status :response-time ms";
 app.use(morgan(chalk.bgMagenta(morganFormat)));
@@ -83,7 +82,9 @@ require('./handlers/users/signup')(app);
 require('./initial-data/initial-data.service');
 require('./handlers/cards/cards')(app);
 require('./handlers/users/models/users')(app);
-
+app.use((req, res) => {
+  res.status(404).json({ message: "Sorry, page not found 404" });
+});
 
 
 
