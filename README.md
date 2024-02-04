@@ -62,6 +62,7 @@ This project is a REST API server built with Node.js, designed to support a web 
 To get started, clone the repository and install the dependencies:
 
 ```bash
-
+git clone https://github.com/ChananelAzenkot/nodeJS-MongoDB-Project.git
+cd project
 npm install
 nodemon
