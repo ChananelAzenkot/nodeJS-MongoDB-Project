@@ -63,6 +63,6 @@ To get started, clone the repository and install the dependencies:
 
 ```bash
 git clone https://github.com/ChananelAzenkot/nodeJS-MongoDB-Project.git
-cd project
+cd nodeJS-MongoDB-Project
 npm install
 nodemon
