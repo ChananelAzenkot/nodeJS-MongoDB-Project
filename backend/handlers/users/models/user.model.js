@@ -43,11 +43,4 @@ const schema = new Schema({
   lockUntil: { type: Date },
 });
 
-schema.pre("save", async function (next) {
-  if (this.isModified("password")) {
-    this.password = await bcrypt.hash(this.password, 10);
-  }
-  next();
-});
-
 exports.User = mongoose.model("users", schema);

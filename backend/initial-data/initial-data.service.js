@@ -11,8 +11,8 @@ const initialDataStart = async () => {
     const userIds = [];
 
     for (const u of users) {
-      const user = new User(u);
       u.password = await bcrypt.hash(u.password, 10);
+      const user = new User(u);
       const obj = await user.save();
       
       if (obj.IsBusiness) {
@@ -32,3 +32,5 @@ const initialDataStart = async () => {
 };
 
 initialDataStart();
+
+

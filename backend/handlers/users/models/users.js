@@ -1,6 +1,7 @@
 const { adminGuard } = require("../../../guards");
 const { guard } = require("../../../guards");
 const { businessGuard } = require("../../../guards");
+const bcrypt = require("bcrypt");
 const { User } = require("./user.model");
 const jwt = require("../../../config/config");
 const { getLoggedUserId } = require("../../../config/config");
@@ -36,6 +37,8 @@ app.get("/api/user/:id", adminGuard, guard, async (req, res) => {
   }
 });
 // edit the user logged for user and admin users //
+
+
 app.put("/api/user/:id", adminGuard, guard, async (req, res) => {
   try {
     const user = getLoggedUserId(req, res);
@@ -53,7 +56,12 @@ app.put("/api/user/:id", adminGuard, guard, async (req, res) => {
     if (!userToUpdate) {
       return res.status(404).json({ message: "User not found" });
     }
-    
+
+    // If password is being updated, hash it before saving
+    if (req.body.password) {
+      req.body.password = await bcrypt.hash(req.body.password, 10);
+    }
+
     Object.assign(userToUpdate, req.body);
 
     await userToUpdate.save();
