@@ -22,6 +22,7 @@ This project is a REST API server built with Node.js, designed to support a web 
 - **Morgan**: For logging HTTP requests.
 - **Cors**: For handling Cross-Origin Resource Sharing.
 - **Chalk**: For styling console output.
+- **File Logger**: Create a Node.js Express server with a middleware for logging errors (status code 400 and above) to daily log files in the "logs" folder.
 
 ## Additional Features and Bonus
 

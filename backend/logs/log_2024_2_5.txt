@@ -3,3 +3,9 @@ Method: POST
 Route: /users/login
 Status: 403
 Response: {"message":"email or password is incorrect"}
+Time: 05-02-2024 22:45:30
+Method: GET
+Route: /dgdssdgsd
+Status: 404
+Response: {"message":"Sorry, page not found 404"}
+
