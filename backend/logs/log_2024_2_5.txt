@@ -201,3 +201,33 @@ Route: /users/login
 Status: 403
 Response: {"message":"email or password is incorrect"}
 
+Time: 05-02-2024 02:16:42
+Method: PUT
+Route: /api/bizNumber/65c02811cc633cbcb87467cf
+Status: 400
+Response: {"message":"BizNumber is already in use"}
+
+Time: 05-02-2024 02:16:44
+Method: PUT
+Route: /api/bizNumber/65c02811cc633cbcb87467cf
+Status: 400
+Response: {"message":"BizNumber is already in use"}
+
+Time: 05-02-2024 02:16:48
+Method: PUT
+Route: /api/bizNumber/65c02811cc633cbcb87467cf
+Status: 400
+Response: {"message":"BizNumber must be a 9 digit number"}
+
+Time: 05-02-2024 02:16:53
+Method: PUT
+Route: /api/bizNumber/65c02811cc633cbcb87467cf
+Status: 400
+Response: {"message":"BizNumber must be a 9 digit number"}
+
+Time: 05-02-2024 02:21:43
+Method: DELETE
+Route: /api/card/65c0265acc633cbcb874679b
+Status: 403
+Response: {"message":"User not authorized to delete this card"}
+

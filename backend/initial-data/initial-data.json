@@ -81,7 +81,8 @@
                 "street": "test",
                 "houseNumber": 3,
                 "zip": "0"
-            }
+            },
+            "bizNumber": 147414278
         },
         {
             "title": "second card",
@@ -101,7 +102,8 @@
                 "street": "test",
                 "houseNumber": 3,
                 "zip": "0"
-            }
+            },
+            "bizNumber": 147416588
         },
         {
             "title": "third card",
@@ -121,7 +123,8 @@
                 "street": "test",
                 "houseNumber": 3,
                 "zip": "0"
-            }
+            },
+            "bizNumber": 345256588
         }
     ]
 }

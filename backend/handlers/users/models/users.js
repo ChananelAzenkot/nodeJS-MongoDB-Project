@@ -36,9 +36,8 @@ app.get("/api/user/:id", adminGuard, guard, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
 // edit the user logged for user and admin users //
-
-
 app.put("/api/user/:id", adminGuard, guard, async (req, res) => {
   try {
     const user = getLoggedUserId(req, res);
@@ -57,7 +56,6 @@ app.put("/api/user/:id", adminGuard, guard, async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // If password is being updated, hash it before saving
     if (req.body.password) {
       req.body.password = await bcrypt.hash(req.body.password, 10);
     }
