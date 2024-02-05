@@ -13,7 +13,7 @@ exports.guard = (req, res, next) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 // verify the token for the user as businessGuard //
@@ -28,7 +28,7 @@ exports.businessGuard = (req, res, next) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 // verify the token for the user as adminGuard //
@@ -49,7 +49,7 @@ exports.adminGuard = (req, res, next) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 

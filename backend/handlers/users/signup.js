@@ -22,7 +22,7 @@ app.post("/signup", async (req, res) => {
     if (error.code === 11000) {
       res.status(409).json({ message: "Email already exists" });
     } else {
-      res.status(500).json({ message: "Internal server error" });
+      res.status(500).json({ message: "Server error", error: error.message });
     }
   }
 });

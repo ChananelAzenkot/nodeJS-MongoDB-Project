@@ -70,7 +70,7 @@ app.post("/users/login", async (req, res) => {
     res.send(token);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 // get all users in the system //
@@ -80,7 +80,7 @@ app.get("/users", guard, async (req, res) => {
     res.send(users);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 // get the logged user details //
@@ -96,7 +96,7 @@ app.get("/users/me", guard, async (req, res) => {
     res.send(user);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 // get a specific by id user details //
@@ -140,7 +140,7 @@ app.patch("/users/:id", guard, async (req, res) => {
     res.end();
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 };

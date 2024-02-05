@@ -33,7 +33,7 @@ app.get("/api/cards", async (req, res) => {
       res.send(cards);
     } catch (error) {
       console.log(error);
-      res.status(500).json({ message: "Server Error" });
+      res.status(500).json({ message: "Server error", error: error.message });
     }
   });
   // get a specific card by id //
@@ -50,7 +50,7 @@ app.get("/api/card/:id", async (req, res) => {
     if (error.kind === 'ObjectId') {
       return res.status(404).json({ message: "Invalid Card ID" });
     }
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({message: "Server error", error: error.message });
   }
 });
   // add a new card //
@@ -179,7 +179,7 @@ app.delete("/api/card/:id", businessGuard, async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({message: "Server error", error: error.message});
   }
 });
 };

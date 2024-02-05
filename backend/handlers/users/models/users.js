@@ -16,7 +16,7 @@ app.get("/api/users", adminGuard, async (req, res) => {
     res.send(users);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
   // get the user logged for user and admin users //
@@ -33,12 +33,12 @@ app.get("/api/user/:id", adminGuard, guard, async (req, res) => {
     res.send(user);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 
 // edit the user logged for user and admin users //
-app.put("/api/user/:id", adminGuard, guard, async (req, res) => {
+app.put("/api/user/:id", adminGuard, async (req, res) => {
   try {
     const user = getLoggedUserId(req, res);
     if (!user) return res.status(403).json({ message: "User not authorized" });
@@ -67,7 +67,7 @@ app.put("/api/user/:id", adminGuard, guard, async (req, res) => {
     res.send("User updated successfully");
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 
@@ -85,7 +85,7 @@ app.patch("/api/user/:id", guard, async (req, res) => {
     res.send("User updated " + user.IsBusiness);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 
@@ -101,7 +101,7 @@ app.delete("/api/user/:id", guard, adminGuard, async (req, res) => {
     res.send("User deleted successfully " + user.name.first);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 };
