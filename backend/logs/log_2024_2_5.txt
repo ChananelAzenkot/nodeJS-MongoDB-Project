@@ -1,11 +1,5 @@
-Time: 05-02-2024 19:34:40
-Method: POST
-Route: /users/login
-Status: 403
-Response: {"message":"email or password is incorrect"}
-Time: 05-02-2024 22:45:30
-Method: GET
-Route: /dgdssdgsd
-Status: 404
-Response: {"message":"Sorry, page not found 404"}
-
+Time: 05-02-2024 23:46:20
+Method: PUT
+Route: /api/bizNumber/65c1258ec0b8ea853d71d10b
+Status: 400
+Response: {"message":"BizNumber must be a 9 digit number"}
