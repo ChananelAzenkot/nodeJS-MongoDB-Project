@@ -36,7 +36,6 @@ app.post("/users/login", async (req, res) => {
         });
     }
     
-
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
@@ -68,76 +67,6 @@ app.post("/users/login", async (req, res) => {
     );
 
     res.send(token);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error", error: error.message });
-  }
-});
-// get all users in the system //
-app.get("/users", guard, async (req, res) => {
-  try {
-    const users = await User.find().select("-password");
-    res.send(users);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error", error: error.message });
-  }
-});
-// get the logged user details //
-app.get("/users/me", guard, async (req, res) => {
-  try {
-    const { userId } = getLoggedUserId(req, res);
-    const user = await User.findById(userId).select("-password");
-
-    if (!user) {
-      return res.status(403).json({ message: "User not found" });
-    }
-
-    res.send(user);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error", error: error.message });
-  }
-});
-// get a specific by id user details //
-  app.get("/users/:id", guard, async (req, res) => {
-    const { userId } = getLoggedUserId(req, res);
-    const user = await User.findById(userId);
-
-    if (userId !== req.params.id && !user?.isAdmin) {
-      return res.status(401).json({ message: "User not authorized" });
-    }
-
-    try {
-      const user = await User.findById(req.params.id).select("-password");
-
-      if (!user) {
-        return res.status(403).json({ message: "User not found" });
-      }
-
-      res.send(user);
-    } catch (err) {
-      return res.status(403).json({ message: "User not found" });
-    }
-  });
-  // update the business status of a user //
-app.patch("/users/:id", guard, async (req, res) => {
-  try {
-    const { userId } = getLoggedUserId(req, res);
-
-    if (userId !== req.params.id) {
-      return res.status(401).json({ message: "User not authorized" });
-    }
-
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    user.IsBusiness = !user.IsBusiness;
-    await user.save();
-
-    res.end();
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error", error: error.message });

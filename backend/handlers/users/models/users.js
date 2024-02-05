@@ -72,7 +72,7 @@ app.put("/api/user/:id", adminGuard, async (req, res) => {
 });
 
 // change the user to business or not for admin and user  //
-app.patch("/api/user/:id", guard, async (req, res) => {
+app.patch("/api/user/:id", adminGuard, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) {
@@ -90,7 +90,7 @@ app.patch("/api/user/:id", guard, async (req, res) => {
 });
 
 // delete the user for admin users //
-app.delete("/api/user/:id", guard, adminGuard, async (req, res) => {
+app.delete("/api/user/:id", adminGuard, async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
 
@@ -105,3 +105,9 @@ app.delete("/api/user/:id", guard, adminGuard, async (req, res) => {
   }
 });
 };
+
+
+
+
+
+

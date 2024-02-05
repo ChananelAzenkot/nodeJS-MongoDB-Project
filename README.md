@@ -37,7 +37,7 @@ This project is a REST API server built with Node.js, designed to support a web 
 
 | No. | Method | URL          | Description       | Authorization            | Returns       |
 | --- | ------ | ------------ | ----------------- | ------------------------ | ------------- |
-| 1   | POST   | /api/users       | Register a user   | All                      | User object   |
+| 1   | POST   | /signup       | Register a user   | All                      | User object   |
 | 2   | POST   | /users/login | User login        | All                      | JWT           |
 | 3   | GET    | /api/users       | Get all users     | Admin                    | Array of users|
 | 4   | GET    | /api/user/:id   | Get a user        | Registered user or Admin | User object   |

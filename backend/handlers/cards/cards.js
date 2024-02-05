@@ -53,7 +53,7 @@ app.get("/api/card/:id", async (req, res) => {
     res.status(500).json({message: "Server error", error: error.message });
   }
 });
-  // add a new card //
+  // add a new card and Posted //
 app.post("/api/addCard", businessGuard, async (req, res) => {
   const { userId } = getLoggedUserId(req, res);
 
@@ -65,7 +65,7 @@ app.post("/api/addCard", businessGuard, async (req, res) => {
 
   const { error } = middlewareCards.validate(req.body);
   if (error) {
-    return res.status(400).send(error.details[0].message);
+    return res.status(400).json({message: error.details[0].message});
   }
 
   const bizNumber = await Card.generateUniqueBizNumber();
@@ -80,9 +80,9 @@ app.post("/api/addCard", businessGuard, async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });
-// update a card by id //
+// update a card by id number //
 app.put("/api/card/:id", businessGuard, async (req, res) => {
-  const { userId } = getLoggedUserId(req, res);
+  const { userId , isAdmin } = getLoggedUserId(req, res);
   if (!userId) {
     return res.status(403).json({ message: "User not authorized" });
   }
@@ -101,12 +101,18 @@ app.put("/api/card/:id", businessGuard, async (req, res) => {
     if (!card) {
       return res.status(404).json({ message: "Card not found" });
     }
+
+    if (card.user_id.toString() !== userId && !isAdmin) {
+      return res
+        .status(403)
+        .json({ message: "User not authorized to update this card" });
+    }
     res.send("Card updated successfully");
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });
-// update a card bizNumber by id //
+// update a card bizNumber by id number //
 app.put("/api/bizNumber/:id", adminGuard, async (req, res) => {
   const newBizNumber = req.body.bizNumber;
 
@@ -130,8 +136,8 @@ app.put("/api/bizNumber/:id", adminGuard, async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });
-// like a card by id //
-app.patch("/api/cardLike/:id", businessGuard, async (req, res) => {
+// like a card by id number //
+app.patch("/api/cardLike/:id", guard, async (req, res) => {
   const { userId } = getLoggedUserId(req, res);
   if (!userId) {
     return res.status(403).json({ message: "User not authorized" });
@@ -154,7 +160,7 @@ app.patch("/api/cardLike/:id", businessGuard, async (req, res) => {
     }
   }
 });
-// delete a card by id //
+// delete a card by id number //
 app.delete("/api/card/:id", businessGuard, async (req, res) => {
   try {
     const { userId, isAdmin } = getLoggedUserId(req, res);
